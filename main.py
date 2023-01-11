@@ -25,4 +25,21 @@ pprint(epl_clubs)
 print(epl_clubs[0].name)
 
 # can not edit it though
-epl_clubs[0].name = 'United' # returns 'AttributeError: can't set attribute' error
+# epl_clubs[0].name = 'United' # returns 'AttributeError: can't set attribute' error
+
+# filtering using filter
+fc = tuple(filter(lambda y: y.won_ucl is True, epl_clubs))
+print('filter:', fc)
+
+# filtering using list comprehension
+lc = tuple([x for x in epl_clubs if x.won_ucl is True])
+print('comprehension:', lc)
+
+# filtering using generator expression
+gc = tuple(x for x in epl_clubs if x.won_ucl is True)
+print('generator:', gc)
+
+# using map to transform the data
+mc = tuple(map(lambda x: {x.name, x.won_ucl }, epl_clubs))
+# mc = tuple(map(lambda y: y.won_ucl, epl_clubs))
+print('map:', mc)
