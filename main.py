@@ -20,6 +20,7 @@ class Iphone:
         assert price >= 0, "Price must be greater than or equal to 0"
         assert quantity >= 0, "Quantity must be greater than or equal to 0"
 
+        # instance attributes
         self.name = name
         self.price = price
         self.quantity = quantity
@@ -34,22 +35,26 @@ class Iphone:
 
     @classmethod
     def read_json(cls, file):
-        # 1. The class is passed as the first argument in a class method
-        # 2. The class doesn't need to be instantiated to use this method,
-        # but you can also use it with an instance.
-        # 3. It is mainly used when you want to instantiate objects about
-        # a data that you created on your own but is related to the class.
+        """
+        1. The class is passed as the first argument in a class method
+        2. The class doesn't need to be instantiated to use this method,
+        but you can also use it with an instance.
+        3. It is mainly used when you want to instantiate objects about
+        a data that you created on your own but is related to the class.
+        """
 
         return json.load(file)
 
     @staticmethod
     def validate_integer(num):
-        # 1. Static methods don't send the instance or class as a first argument
-        # 2. It works like a regular function but inside a class
-        # 3. The class also doesn't need to be instantiated to use this method,
-        # but you can also use it with an instance
-        # 4. Mainly used when you want a method that does something related to the class
-        # but not to the instances of the class.
+        """
+        1. Static methods don't send the instance or class as a first argument
+        2. It works like a regular function but inside a class
+        3. The class also doesn't need to be instantiated to use this method,
+        but you can also use it with an instance
+        4. Mainly used when you want a method that does something related to the class
+        but not to the instances of the class.
+        """
         if isinstance(num, float):
             return num.is_integer() # allows numbers with .0 as integers.
         elif isinstance(num, int):
@@ -67,10 +72,12 @@ class Iphone:
             )
             return phone
         else:
-            return "invalid price value, must be an integer"
+            return "Invalid price value, must be an integer"
 
-    # to alow printing the content of all without just printing the location in memory
-    # You use the __repr__ magic attribute
     def __repr__(self):
+        """
+        To alow printing the content of all without
+        just printing the location in memory,
+        you use the __repr__ magic attribute
+        """
         return f"Iphone({self.name}, {self.price}, {self.quantity})"
-

@@ -31,5 +31,3 @@ for i in Iphone.all:
 
 # with __repr__
 print(Iphone.all)
-
-print(Iphone.get_pay_rate())

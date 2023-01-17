@@ -5,8 +5,6 @@ json_file = open('data.json')
 iphones = Iphone.read_json(json_file)
 print(iphones[0])
 
-print(Iphone.all)
-
 # using the static method
 for model in iphones:
     print(Iphone.validate_integer(model['price']))
