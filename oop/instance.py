@@ -1,4 +1,4 @@
-from .main import Iphone
+from main import Iphone
 
 
 # magic method to get all attributes and methods of the class

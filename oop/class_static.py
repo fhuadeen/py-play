@@ -1,7 +1,10 @@
 from main import Iphone
+import sys,os
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# sys.path.insert(0, BASE)
 
 # using the class method
-json_file = open('data.json')
+json_file = open(f'{BASE}/oop/data.json')
 iphones = Iphone.read_json(json_file)
 print(iphones[0])
 
