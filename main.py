@@ -1,3 +1,5 @@
+import json
+
 
 class Iphone:
 
@@ -30,38 +32,45 @@ class Iphone:
     def calc_discount(self):
         return self.calc_total_price() * self.pay_rate
 
+    @classmethod
+    def read_json(cls, file):
+        # 1. The class is passed as the first argument in a class method
+        # 2. The class doesn't need to be instantiated to use this method,
+        # but you can also use it with an instance.
+        # 3. It is mainly used when you want to instantiate objects about
+        # a data that you created on your own but is related to the class.
+
+        return json.load(file)
+
+    @staticmethod
+    def validate_integer(num):
+        # 1. Static methods don't send the instance or class as a first argument
+        # 2. It works like a regular function but inside a class
+        # 3. The class also doesn't need to be instantiated to use this method,
+        # but you can also use it with an instance
+        # 4. Mainly used when you want a method that does something related to the class
+        # but not to the instances of the class.
+        if isinstance(num, float):
+            return num.is_integer() # allows numbers with .0 as integers.
+        elif isinstance(num, int):
+            return True
+        return False
+
+    @staticmethod
+    def instantiate(instance):
+        validate_price = Iphone.validate_integer(instance.get('price'))
+        if validate_price:
+            phone = Iphone(
+                instance.get("name"),
+                instance.get("price"),
+                instance.get("quantity"),
+            )
+            return phone
+        else:
+            return "invalid price value, must be an integer"
+
     # to alow printing the content of all without just printing the location in memory
     # You use the __repr__ magic attribute
     def __repr__(self):
         return f"Iphone({self.name}, {self.price}, {self.quantity})"
 
-# magic method to get all attributes and methods of the class
-# can also be used to get all instance attributes when called on an object of the class
-# print(Iphone.__dict__)
-
-iphone_11 = Iphone("Iphone 11", 1000, 3)
-print(iphone_11.name)
-
-print(iphone_11.calc_discount())
-
-
-# you can also save data of instances in your class for quick access and reuse
-# a popular framework that uses it is Django in query results
-iphone_x = Iphone('Iphone X', 850, 10)
-iphone_12 = Iphone('Iphone 12', 1200, 12)
-iphone_13 = Iphone('Iphone 13', 1350, 14)
-
-# example of results without using __repr__
-# [<__main__.Iphone object at 0x7f6cb3667fd0>, <__main__.Iphone object at 0x7f6cb3667e80>, <__main__.Iphone object at 0x7f6cb3667e20>, <__main__.Iphone object at 0x7f6cb3667dc0>]
-print(Iphone.all)
-
-for i in Iphone.all:
-    if i.name.endswith('X'):
-        i.price = i.calc_discount()
-print('finished 1')
-
-for i in Iphone.all:
-    print(i.price)
-
-# with __repr__
-print(Iphone.all)
