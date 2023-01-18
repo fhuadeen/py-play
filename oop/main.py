@@ -1,7 +1,7 @@
 import json
 
 
-class Iphone:
+class Product:
 
     # class attributes
     pay_rate = 0.8
@@ -25,7 +25,7 @@ class Iphone:
         self.price = price
         self.quantity = quantity
 
-        Iphone.all.append(self)
+        Product.all.append(self)
 
     def calc_total_price(self):
         return self.price * self.quantity
@@ -63,9 +63,9 @@ class Iphone:
 
     @staticmethod
     def instantiate(instance):
-        validate_price = Iphone.validate_integer(instance.get('price'))
+        validate_price = Product.validate_integer(instance.get('price'))
         if validate_price:
-            phone = Iphone(
+            phone = Product(
                 instance.get("name"),
                 instance.get("price"),
                 instance.get("quantity"),
@@ -76,8 +76,10 @@ class Iphone:
 
     def __repr__(self):
         """
-        To alow printing the content of all without
+        1. To alow printing the content of all without
         just printing the location in memory,
-        you use the __repr__ magic attribute
+        you use the __repr__ magic attribute.
+        2. self.__class__.__name__ helps to dynamically change
+        the class name between Parent and Child classes
         """
-        return f"Iphone({self.name}, {self.price}, {self.quantity})"
+        return f"{self.__class__.__name__}({self.name}, {self.price}, {self.quantity})"
