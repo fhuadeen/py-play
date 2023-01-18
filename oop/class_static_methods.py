@@ -1,16 +1,16 @@
-from main import Iphone
+from main import Product
 import sys,os
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # sys.path.insert(0, BASE)
 
 # using the class method
 json_file = open(f'{BASE}/oop/data.json')
-iphones = Iphone.read_json(json_file)
+iphones = Product.read_json(json_file)
 print(iphones[0])
 
 # using the static method
 for model in iphones:
-    print(Iphone.validate_integer(model['price']))
+    print(Product.validate_integer(model['price']))
 
  
 for model in iphones:
@@ -21,6 +21,6 @@ for model in iphones:
     This can be applied to say data from a database to a Python model,
     just like in Django.
     """
-    Iphone.instantiate(model)
+    Product.instantiate(model)
 
-print(Iphone.all)
+print(Product.all)
