@@ -18,6 +18,25 @@
         "name": "Iphone 13",
         "price": 1500,
         "quantity": 45
+    },
+    {
+        "name": "Samsung Galaxy S20",
+        "price": 900,
+        "quantity": 15
+    },
+    {
+        "name": "Samsung Galaxy S21",
+        "price": 1000.93,
+        "quantity": 20
+    },
+    {
+        "name": "Samsung Galaxy S22",
+        "price": 1200.50,
+        "quantity": 35
+    },
+    {
+        "name": "Samsung Galaxy S23",
+        "price": 1500,
+        "quantity": 45
     }
-
 ]
