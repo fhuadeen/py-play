@@ -1,4 +1,4 @@
-from main import Product
+from .product import Product
 
 
 # magic method to get all attributes and methods of the class

@@ -22,10 +22,24 @@ class Product:
 
         # instance attributes
         self.name = name
-        self.price = price
+        self.__price = price
         self.quantity = quantity
 
         Product.all.append(self)
+
+    @property
+    def price(self):
+        """Encapsulation: Make the price attribute read-only"""
+        return self.__price
+
+    @price.setter
+    def price(self, value):
+        """Update the price attribute
+        We add the price-negative check again during updating
+        """
+        if value < 0:
+            raise ValueError("price must be positive")
+        self.__price = value
 
     def calc_total_price(self):
         return self.price * self.quantity
@@ -34,7 +48,12 @@ class Product:
         return self.calc_total_price() * self.pay_rate
 
     @classmethod
-    def read_json(cls, file):
+    def __connect_to_db(cls):
+        """Fake connection to the database"""
+        return "connected"
+
+    @classmethod
+    def __read_json(cls, file, query=None):
         """
         1. The class is passed as the first argument in a class method
         2. The class doesn't need to be instantiated to use this method,
@@ -42,11 +61,24 @@ class Product:
         3. It is mainly used when you want to instantiate objects about
         a data that you created on your own but is related to the class.
         """
+        data = json.load(file)
+        if not query:
+            return data
+        return tuple(filter(lambda x: x.get("name").startswith(query), data))
 
-        return json.load(file)
+    # abstraction
+    @classmethod
+    def filter(self, file_obj, query=None):
+        """We can abstract away the methods that
+        connect to the database and retrieve data
+        by adding __ to their names"""
+        cursor = Product.__connect_to_db()
+        if cursor == "connected":
+            instance = Product.__read_json(file_obj, query)
+            return instance
 
     @staticmethod
-    def validate_integer(num):
+    def __validate_integer(num):
         """
         1. Static methods don't send the instance or class as a first argument
         2. It works like a regular function but inside a class
@@ -56,14 +88,14 @@ class Product:
         but not to the instances of the class.
         """
         if isinstance(num, float):
-            return num.is_integer() # allows numbers with .0 as integers.
+            return True # allows numbers with .0 as integers.
         elif isinstance(num, int):
             return True
         return False
 
     @staticmethod
     def instantiate(instance):
-        validate_price = Product.validate_integer(instance.get('price'))
+        validate_price = Product.__validate_integer(instance.get('price'))
         if validate_price:
             phone = Product(
                 instance.get("name"),
@@ -73,6 +105,9 @@ class Product:
             return phone
         else:
             return "Invalid price value, must be an integer"
+
+    def show(self):
+        return self
 
     def __repr__(self):
         """

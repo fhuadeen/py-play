@@ -1,4 +1,7 @@
-from main import Product
+import sys,os
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, BASE)
+from product import Product
 
 
 class Iphone(Product):
@@ -33,10 +36,9 @@ class Iphone(Product):
         self.broken_phones = broken_phones
 
         Iphone.all.append(self)
-
-iphone_8 = Iphone('Iphone 8', 650, 25, 3)
-print(iphone_8.broken_phones)
-print(Iphone.all)
+    
+    def show(self):
+        return self.name
 
 
 class Samsung(Product):
@@ -44,7 +46,7 @@ class Samsung(Product):
     pay_rate = 0.8
 
     # to save instances
-    all = []
+    # all = []
     
     def __init__(self, name: str, price: float, quantity: int=0, broken_phones: int=0):
         """
@@ -67,8 +69,4 @@ class Samsung(Product):
         by deleting the one in child class,
         or make it specific to the child class by having its own
         """
-        Samsung.all.append(self)
-
-galaxy_s20 = Samsung('Galaxy S20', 650, 25, 8)
-print(galaxy_s20.broken_phones)
-print(Samsung.all)
+        # Samsung.all.append(self)
